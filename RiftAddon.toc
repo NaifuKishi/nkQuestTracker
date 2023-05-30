@@ -1,0 +1,45 @@
+Identifier = "nkQuestTracker"
+Name = "Naifu's Quest Tracker"
+NameShort ="nkQuestTracker"
+Description = "nkQuestTracker is a replacement of the standard quest tracker."
+
+Author = "Naifu"
+Email = "naifukishi@gmail.com"
+
+Version = "3.0.0"
+Environment = "4.0"
+
+RunOnStartup = {
+  "main.lua",
+  "events.lua",
+  "config/config.lua",
+  "config/settings.lua",
+  "missingList.lua",
+  "nkPanel-plugin.lua",
+  "ui.lua",
+  "ui-category.lua",
+  "ui-entry.lua",
+  "ui-useitems.lua",
+  "ui-areaquest.lua",
+  "locales/localizationDE.lua",
+  "locales/localizationEN.lua",
+}
+
+Embed = {
+  ["Libs/EnKai"] = true,
+  ["Libs/nkQuestBase"] = true,
+}
+
+Dependencies = {
+  EnKai = {"required", "before"},
+  nkQuestBase = {"required", "before"},
+}
+
+SavedVariables = {
+	nkQuestTrackerSetup = "character",
+	nkQuestTrackerGlobal = "account"
+}
+-- X-Curse-Packaged-Version: V3.0.0
+-- X-Curse-Project-Name: nkQuestTracker
+-- X-Curse-Project-ID: nkquesttracker
+-- X-Curse-Repository-ID: rift/nkquesttracker/mainline
