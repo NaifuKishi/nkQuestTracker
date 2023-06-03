@@ -221,10 +221,10 @@ local function _fctSettingsHandler(_, addon)
 			if nkQuestTrackerSetup.autoHide == nil then nkQuestTrackerSetup.autoHide = false end
 			
 			if nkQuestTrackerSetup.categoryColor.pvp == nil then
-        table.insert(nkQuestTrackerSetup.categoryOrder, 6, "pvp")
-        nkQuestTrackerSetup.categoryColor.pvp = { 0, 0.58, 1 }
-        nkQuestTrackerSetup.categoryShow.pvp = true
-        nkQuestTrackerSetup.categoryFontSize.pvp = { header = 15, body = 13}
+				table.insert(nkQuestTrackerSetup.categoryOrder, 6, "pvp")
+				nkQuestTrackerSetup.categoryColor.pvp = { 0, 0.58, 1 }
+				nkQuestTrackerSetup.categoryShow.pvp = true
+				nkQuestTrackerSetup.categoryFontSize.pvp = { header = 15, body = 13}
 			end
 			
 			if nkQuestTrackerSetup.categoryColor.guild == nil then
