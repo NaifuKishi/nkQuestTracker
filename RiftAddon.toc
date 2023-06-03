@@ -6,7 +6,7 @@ Description = "nkQuestTracker is a replacement of the standard quest tracker."
 Author = "Naifu"
 Email = "naifukishi@gmail.com"
 
-Version = "3.0.0"
+Version = "3.0.1"
 Environment = "4.0"
 
 RunOnStartup = {
@@ -39,7 +39,3 @@ SavedVariables = {
 	nkQuestTrackerSetup = "character",
 	nkQuestTrackerGlobal = "account"
 }
--- X-Curse-Packaged-Version: V3.0.0
--- X-Curse-Project-Name: nkQuestTracker
--- X-Curse-Project-ID: nkquesttracker
--- X-Curse-Repository-ID: rift/nkquesttracker/mainline

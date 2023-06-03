@@ -33,7 +33,7 @@ function internal.missingList ()
 		return
 	end
 
-	uiElements.craftingList:SetVisible(false)
+	--uiElements.craftingList:SetVisible(false)
 
 	if oInspectSystemSecure() == false then Command.System.Watchdog.Quiet() end
 
@@ -74,7 +74,7 @@ function internal.missingList ()
 								if details.domain ~= 'ia' and details.name ~= "" then
 									local level = internal.processQuest(details, false)
 									local domainText = privateVars.langTexts.showCategoryCheckbox[details.domain]
-									table.insert(gridValues, { {key = key, value = details.name}, { value = level }, { value = domainText } })
+									table.insert(gridValues, { {key = key, value = string.gsub(details.name, "[\n\r]", "")}, { value = level }, { value = domainText } })
 								end
 							end 
 						end       

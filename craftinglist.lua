@@ -35,7 +35,7 @@ function privateVars.internal.craftinglist (internalFlag)
 	
 	privateVars.have = {}
 	privateVars.craftItems = {}
-  privateVars.missingItemList = {}
+  	privateVars.missingItemList = {}
 	
 	
 	for questKey, v in pairs(details) do
