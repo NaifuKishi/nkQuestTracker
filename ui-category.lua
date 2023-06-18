@@ -207,7 +207,14 @@ function internal.questCategory(category, parent, ui)
 
 	function frame:AddQuest(key, title, objectives, complete, level, zone)
 
+		--if zone ~= nil and EnKai.strings.find(title, zone) then
+		--	local pattern = string.format("%s:", zone)
+		--	local newTitle = string.match(title, pattern .. "(.*)")
+		--	if newTitle then title = newTitle end
+		--end
+
 		local thisEntry
+
 		if #recycleBin > 0 then
 			thisEntry = recycleBin[1]
 			thisEntry:SetKey(key);

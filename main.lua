@@ -431,11 +431,13 @@ function internal.processQuest(details, processTitleFlag)
 				if zoneInfo ~= nil then _zoneInfo[libDetails.zoneId] = zoneInfo.name end
 			end
 
-			if _zoneInfo[libDetails.zoneId] ~= nil then details.zone = _zoneInfo[libDetails.zoneId] end 
+			if _zoneInfo[libDetails.zoneId] ~= nil then 
+				details.zone = _zoneInfo[libDetails.zoneId]
+			end 
 		end
 	end
 	
-	if EnKai.strings.find(details.tag, 'story') ~= nil and details.zone == nil ~= details.categoryName then
+	if EnKai.strings.find(details.tag, 'story') ~= nil and details.zone == nil and details.categoryName ~= nil then
 		details.name = string.format("%s:\n%s", details.categoryName, details.name)
 	end
 
