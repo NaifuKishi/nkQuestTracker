@@ -66,6 +66,7 @@ function internal.ConfigTabSettings (parent)
 		Command.Event.Attach(EnKai.events[name .. 'alphaSlider'].SliderChanged, function (_, newValue)
 			nkQuestTrackerSetup.bgAlpha = newValue / 100
 			uiElements.questLog:SetBackgroundColor(0, 0, 0, newValue / 100)
+			uiElements.questLog:GetHeader():SetBackgroundColor(0, 0, 0, newValue / 100)
 			uiElements.useUI:SetBackgroundColor(0, 0, 0, newValue / 100)
 		end, name .. 'alphaSlider' .. ".SliderChanged")
 		

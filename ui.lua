@@ -12,6 +12,8 @@ local oInspectSystemSecure	= Inspect.System.Secure
 
 ---------- init local variables ---------
 
+local colorR, colorG, colorB, colorA = 0.9, 0.74, 0, 1
+
 ---------- local function block ---------
 
 ---------- addon internal function block ---------
@@ -30,14 +32,21 @@ function internal.buildUI ()
 	ui:SetBackgroundColor(0, 0, 0, nkQuestTrackerSetup.bgAlpha)
 	ui:SetLayer(1)
 	ui:SetTitle(addonInfo.name)
-	ui:SetTitleColor(1, 1 ,1 ,1)
-	ui:SetTitleAlign("right", -30)
+	--ui:SetTitleColor(1, 1 ,1 ,1)
+	ui:SetTitleColor(colorR, colorG, colorB, colorA)
+
+	ui:SetTitleAlign("left", 40)
 	ui:SetCloseable(false)
 	ui:ShowMoveToggle(true)
 	ui:SetDragable(nkQuestTrackerSetup.moveable)
 	ui:SetCollapseable(true)
 	ui:SetAutoHideHeader(nkQuestTrackerSetup.autoHide, 2, 30)
 	ui:SetFontSize(14)
+
+	ui:GetHeader():SetBackgroundColor(0, 0, 0, nkQuestTrackerSetup.bgAlpha)	
+	
+	ui:SetArrowTextures("nkQuestTracker", "gfx/windowModernArrowRight.png", "gfx/windowModernArrowDown.png")
+	ui:GetMoveCheckbox():SetColor(colorR, colorG, colorB, colorA)
 	
 	Command.Event.Attach(EnKai.events[name].HeaderHide, function (_)
 	  EnKai.events.addInsecure(
@@ -61,9 +70,48 @@ function internal.buildUI ()
 	Command.Event.Attach(EnKai.events[name].Dragable, function (_, dragable)
 		nkQuestTrackerSetup.moveable = dragable
 	end, name .. '.Dragable')
+
+
+	-- ********* QUEST ITEM BUTTON
+		
+	local useButton = EnKai.uiCreateFrame("nkActionButtonMetro", name .. "questIconButton", uiElements.secureContext)
+	useButton:SetScale(.25)
+	useButton:SetPoint("CENTERRIGHT", ui:GetHeader(), "CENTERRIGHT", -3, 0)	
+	useButton:SetColor(0, 0, 0, 0)
+	useButton:SetBackgroundColor(colorR, colorG, colorB, colorA)
+	useButton:SetSecureMode("restricted")	
+
+	local checkAlpha = nil
+
+	useButton:EventAttach(Event.UI.Input.Mouse.Cursor.In, function (self)
+		if oInspectSystemSecure() == false then
+			checkAlpha = useButton:GetAlpha()
+			useButton:SetAlpha(1)
+		end
+	end, name .. ".resizeIcon.Mouse.Cursor.In")
+
+	useButton:EventAttach(Event.UI.Input.Mouse.Cursor.Out, function (self)
+		if oInspectSystemSecure() == false and checkAlpha ~= nil then
+			useButton:SetAlpha(checkAlpha)
+		end
+	end, name .. ".resizeIcon.Mouse.Cursor.Out")
+
+	useButton:EventAttach(Event.UI.Input.Mouse.Right.Down, function (self)
+		if oInspectSystemSecure() then return end
+
+		if uiElements.useUI:GetVisible() == true then
+			uiElements.useUI:SetVisible(false)
+		else
+			uiElements.useUI:SetVisible(true)
+		end
+	end, name .. ".resizeIcon.Mouse.Right.Down")
+
+	function ui:getUseItemButton () return useButton end
+
+	-- ********* ZONE FILTER BUTTON
 	
 	local zoneFilterIcon = UI.CreateFrame('Texture', name .. '.zoneFilterIcon', ui:GetHeader())
-	zoneFilterIcon:SetPoint("CENTERLEFT", ui:GetHeader(), "CENTERLEFT", 43, 0)
+	zoneFilterIcon:SetPoint("CENTERRIGHT", useButton, "CENTERLEFT", -5, 0)
 	zoneFilterIcon:SetTextureAsync("nkQuestTracker", "gfx/zoneFilterOff.png");
 	zoneFilterIcon:SetWidth(12)
 	zoneFilterIcon:SetHeight(12)
@@ -85,7 +133,7 @@ function internal.buildUI ()
 	EnKai.ui.attachGenericTooltip (zoneFilterIcon, "nkQuestTracker", privateVars.langTexts.zoneFilter)
 
 	local missingIcon = UI.CreateFrame('Texture', name .. '.missingIcon', ui:GetHeader())
-	missingIcon:SetPoint("CENTERLEFT", zoneFilterIcon, "CENTERRIGHT", 5, 0)
+	missingIcon:SetPoint("CENTERRIGHT", zoneFilterIcon, "CENTERLEFT", -5, 0)
 	missingIcon:SetTextureAsync("nkQuestTracker", "gfx/missingIcon.png");
 	missingIcon:SetWidth(12)
 	missingIcon:SetHeight(12)
@@ -97,7 +145,7 @@ function internal.buildUI ()
 	EnKai.ui.attachGenericTooltip (missingIcon, "nkQuestTracker", privateVars.langTexts.missingList)
 	
 	local refreshIcon = UI.CreateFrame('Texture', name .. '.refreshIcon', ui:GetHeader())
-	refreshIcon:SetPoint("CENTERLEFT", missingIcon, "CENTERRIGHT", 5, 0)
+	refreshIcon:SetPoint("CENTERRIGHT", missingIcon, "CENTERLEFT", -5, 0)
 	refreshIcon:SetTextureAsync("nkQuestTracker", "gfx/refreshIcon.png");
 	refreshIcon:SetWidth(12)
 	refreshIcon:SetHeight(12)
@@ -169,10 +217,13 @@ function internal.buildUI ()
 	scrollPane:SetPoint("TOPLEFT", ui:GetContent(), "TOPLEFT", -2, 0)
 	scrollPane:SetWidth(ui:GetContent():GetWidth())
 	scrollPane:SetHeight(ui:GetContent():GetHeight())
-	scrollPane:SetColor({r = 0.153, g = 0.314, b = 0.490, a = 1})
 	
-	scrollPane:SetColorInner({r = 0, g = 0, b = 0, a = 1})
-	scrollPane:SetColorHighlight({r = 0.153, g = 0.314, b = 0.490, a = 1})
+	-- ***** Hide scrollbars by setting the color to transparent *****
+
+	scrollPane:SetColor({r = 0.153, g = 0.314, b = 0.490, a = 0})	
+	scrollPane:SetColorInner({r = 0, g = 0, b = 0, a = 0})
+	scrollPane:SetColorHighlight({r = 0.153, g = 0.314, b = 0.490, a = 0})
+
 	scrollPane:SetLayer(1)	
 		
 	content = UI.CreateFrame("Frame", name .. '.content', scrollPane)
@@ -186,7 +237,7 @@ function internal.buildUI ()
 		thisCategory:SetHeight(0)
 		
 		if idx == 1 then
-			thisCategory:SetPoint("TOPLEFT", content, "TOPLEFT")
+			thisCategory:SetPoint("TOPLEFT", content, "TOPLEFT", 0, 10)
 		else
 			thisCategory:SetPoint("TOPLEFT", questCategories[idx-1], "BOTTOMLEFT")
 		end
@@ -195,40 +246,6 @@ function internal.buildUI ()
 		
 		table.insert(questCategories, thisCategory)
 	end	
-	
-	-- ********* QUEST ITEM BUTTON
-	
-	local useButton = EnKai.uiCreateFrame("nkActionButtonMetro", name .. "questIconButton", uiElements.secureContext)
-	useButton:SetScale(.25)
-	useButton:SetPoint("CENTERRIGHT", ui:GetHeader(), "CENTERRIGHT", -3, 0)
-	useButton:SetSecureMode("restricted")
-
-	local checkAlpha = nil
-
-	useButton:EventAttach(Event.UI.Input.Mouse.Cursor.In, function (self)
-		if oInspectSystemSecure() == false then
-			checkAlpha = useButton:GetAlpha()
-			useButton:SetAlpha(1)
-		end
-	end, name .. ".resizeIcon.Mouse.Cursor.In")
-
-	useButton:EventAttach(Event.UI.Input.Mouse.Cursor.Out, function (self)
-		if oInspectSystemSecure() == false and checkAlpha ~= nil then
-			useButton:SetAlpha(checkAlpha)
-		end
-	end, name .. ".resizeIcon.Mouse.Cursor.Out")
-
-	useButton:EventAttach(Event.UI.Input.Mouse.Right.Down, function (self)
-		if oInspectSystemSecure() then return end
-
-		if uiElements.useUI:GetVisible() == true then
-			uiElements.useUI:SetVisible(false)
-		else
-			uiElements.useUI:SetVisible(true)
-		end
-	end, name .. ".resizeIcon.Mouse.Right.Down")
-
-	function ui:getUseItemButton () return useButton end
 	
 	---------------------------------------
 	----- UI dimension recalculations -----
@@ -244,7 +261,7 @@ function internal.buildUI ()
 	end
 	
 	function ui:RecalcHeight()
-		local height = 0
+		local height = 10
     
 		for idx = 1, #questCategories, 1 do
 			if questCategories[idx]:GetVisible() == true then
@@ -270,6 +287,14 @@ function internal.buildUI ()
 		for k, v in pairs(questCategories) do
 			if v:GetCategory() == category then return v end
 		end
+	end
+
+	function ui:GetQuestCount()
+		local count = 0
+		for k, v in pairs(questCategories) do
+			count = count + v:GetQuestCount()
+		end
+		return count
 	end
 		
 	---------------------------------------

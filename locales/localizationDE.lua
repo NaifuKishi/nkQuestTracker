@@ -50,6 +50,7 @@ if ( EnKai.tools.lang.getLanguage()  == "German") then
 		completeInfo			= '%s <font color="#FF0000">(fertig)</font>',
 		categoryHeaderSize		= 'Grösse Kategorietitel %d',
 		abandonAll				= 'Alle abbrechen',
+		identifierCarnage		= 'Massaker',
 		
 		showCategoryCheckbox	= {	area = "Gebiet", 
 									guild = "Gilde", 
@@ -63,6 +64,7 @@ if ( EnKai.tools.lang.getLanguage()  == "German") then
 									daily = "Täglich", 
 									world = "Welt", 
 									weekly = "Wöchentlich", 
+									monthly = "Monatlich",
 									story	= "Geschichte",
 									zone = "Zone"},
 	}

@@ -240,7 +240,8 @@ function events.unitNotAvaiable(_, units)
 	data.playerAvailable = false
 	
 	if uiElements.questLog ~= nil then
-		uiElements.questLog:SetTitle(addonInfo.name .. " (PAUSED)")
+		--uiElements.questLog:SetTitle(addonInfo.name .. " (PAUSED)")
+		uiElements.questLog:SetTitle("Quests (PAUSED)")
 	end
 
 end
@@ -349,5 +350,7 @@ function events.systemUpdate()
 
 		lastQuestUpdate = oInspectTimeReal()
 		forceUpdate = false
+
+		uiElements.questLog:SetTitle(string.format("%d Quests", uiElements.questLog:GetQuestCount()))
 	end
 end

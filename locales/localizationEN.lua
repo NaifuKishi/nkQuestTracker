@@ -50,9 +50,11 @@ if EnKai.tools.lang.getLanguage() ~= "German" then
 		completeInfo			= '%s <font color="#FF0000">(done)</font>',
 		categoryHeaderSize		= 'Category title size %d',
 		abandonAll				= 'Abandon all',
+		identifierCarnage		= 'Carnage',
 		
 		showCategoryCheckbox	= {	crafting = "Crafting", 
 									weekly = "Weekly", 
+									monthly = "Monthly",
 									daily = "Daily", 
 									guild = "Guild", 
 									ia = "Instant Adventure", 

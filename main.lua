@@ -26,7 +26,8 @@ local oInspectMouse			= Inspect.Mouse
 local _craftingItems = {
 	"I4CD48A0656A66436,41331FF662BDB8ED,,,,,,",
 	"I21D9052625C52295,709CF1BA97DA8BF9,,,,,,",
-	"I2D199E412D5BD46E,DEFE32C2157DE5B1,,,,,,"
+	"I2D199E412D5BD46E,DEFE32C2157DE5B1,,,,,,",
+	"I5B81BB103E80D890,110D59F273118747,,,,,,"
 }
 
 local _zoneInfo			= {}
@@ -132,7 +133,8 @@ local function _fctUnitAvailable (_, units)
 		Command.Event.Attach(Event.Item.Update, events.SlotUpdate, "nkQuestTracker.inventory.Item.Update")
 	end
 
-	uiElements.questLog:SetTitle(addonInfo.name)
+	--uiElements.questLog:SetTitle(addonInfo.name)
+	uiElements.questLog:SetTitle(string.format("%d Quests", uiElements.questLog:GetQuestCount()))
 
 end
 
@@ -189,17 +191,17 @@ local function _fctSettingsHandler(_, addon)
 								moveable = true, displayHeader = true,  bgAlpha = .6, categoryHeaderSize = 16,
 								useareaquestui = true,
 								areaquestui = {xpos = 800, ypos = 850, width = 300, moveable = true},
-								categoryOrder = { "crafting", "daily", "weekly", "guild", "ia", "pvp", "world", "zone", "area", "instant", "raid", "story", "personal", "carnage"},
+								categoryOrder = { "crafting", "daily", "weekly", "monthly", "guild", "ia", "pvp", "world", "zone", "area", "instant", "raid", "story", "personal", "carnage"},
 								categoryColor = { 
 													guild = { 0, 0.58, 1 }, ia = { 0.737, 1, 0.804 }, pvp = { 1, 0.417, 0 }, story = { 0.839, 0.498, 1},
 													world = {1, 1, 1}, zone = { 0.737, 1, 0.804 }, area = { 0.655, 1, 0.357 }, instant = { 1, 0.847, 0 }, raid = { 1, 0.417, 0 },
-												  crafting = { 0, 0.715, 0.875 }, daily = { 0.498, 0.788, 1 }, weekly = { 0, 0.58, 1 }, personal = { 0.839, 0.498, 1}, carnage = { 0.839, 0.498, 1}},
-								categoryShow = {crafting = true, world = true, daily = true, guild = true, ia = true, weekly = true, zone = true, area = true, instant = true, raid = true, story = true, personal = true, carnage = true, pvp = true},
+												  crafting = { 0, 0.715, 0.875 }, daily = { 0.498, 0.788, 1 }, monthly = { 0, 0.58, 1 }, weekly = { 0, 0.58, 1 }, personal = { 0.839, 0.498, 1}, carnage = { 0.839, 0.498, 1}},
+								categoryShow = {crafting = true, world = true, daily = true, guild = true, ia = true, monthly = true, weekly = true, zone = true, area = true, instant = true, raid = true, story = true, personal = true, carnage = true, pvp = true},
 								categoryFontSize = { 
 														ia = { header = 15, body = 13},  guild = { header = 15, body = 13},  carnage = { header = 15, body = 13}, pvp = { header = 15, body = 13},
 														world = { header = 15, body = 13},  zone = { header = 15, body = 13},  area = { header = 15, body = 13}, story = { header = 15, body = 13},
 													 instant = { header = 15, body = 13}, raid = { header = 15, body = 13}, personal = { header = 15, body = 13},
-													 crafting = { header = 15, body = 13}, daily = { header = 15, body = 13}, weekly = { header = 15, body = 13}},
+													 crafting = { header = 15, body = 13}, daily = { header = 15, body = 13}, monthly = { header = 15, body = 13}, weekly = { header = 15, body = 13}},
 								bodyColor = {1, 1, 1},
 								bodyCompleteColor = {.6, .6, .6},
 								collapseState = {},
@@ -273,6 +275,15 @@ local function _fctSettingsHandler(_, addon)
 				nkQuestTrackerSetup.categoryShow.story = true
 				nkQuestTrackerSetup.categoryFontSize.story = { header = 15, body = 13}
 			end
+
+			-- V3.0.2 changes
+
+			if not EnKai.tools.table.isMember(nkQuestTrackerSetup.categoryOrder, "monthly") then
+				nkQuestTrackerSetup.categoryOrder = { "crafting", "daily", "weekly", "monthly", "guild", "ia", "pvp", "world", "zone", "area", "instant", "raid", "story", "personal", "carnage"}
+				nkQuestTrackerSetup.categoryColor.monthly = { 0, 0.58, 1 }
+				nkQuestTrackerSetup.categoryShow.monthly = true
+				nkQuestTrackerSetup.categoryFontSize.monthly = { header = 15, body = 13}
+			end
 			
 		end
 	
@@ -291,7 +302,7 @@ function internal.fillLog ()
 	
 	local newCollapseState = {}
 	
-	local questList = { personal = {} }
+	--local questList = { personal = {} }
 	local areaQuestKey
 	
 	for k, v in pairs(details) do
@@ -340,36 +351,62 @@ end
 
 function internal.processQuest(details, processTitleFlag)
 
+	local setDomain = false
+
 	if details.rewardChoose ~= nil then
 		for k, v in pairs(details.rewardChoose) do
 			if EnKai.tools.table.isMember (_craftingItems, k) == true then
 				if details.tagName ~= nil then details.name = string.format("%s (%s)", details.name, details.tagName) end
 				details.domain = "crafting"
+				setDomain = true
 				break
 			end
 		end
 	end
 
-	if details.rewardGuaranteed ~= nil then
+	if setDomain == false and details.rewardGuaranteed ~= nil then
 		for k, v in pairs(details.rewardGuaranteed) do
 			if EnKai.tools.table.isMember (_craftingItems, k) == true then
 				if details.tagName ~= nil then details.name = string.format("%s (%s)", details.name, details.tagName) end
 				details.domain = "crafting"
+				setDomain = true
 				break
 			end
 		end
 	end
-	
-	if details.domain ~= 'crafting' and EnKai.strings.find(details.tag, 'weekly') ~= nil then
-		if processTitleFlag == true then details.name = string.format("%s (%s)", details.name, details.tagName) end
-		details.domain = 'weekly'
-	elseif details.domain ~= 'crafting' and EnKai.strings.find(details.tag, 'daily') ~= nil then
-		if processTitleFlag == true then details.name = string.format("%s (%s)", details.name, details.tagName) end
-		details.domain = 'daily'
-	elseif EnKai.strings.find(details.tag, 'story') then
-		details.domain = 'story'
-	elseif details.domain == nil then
-		details.domain = 'personal'
+
+	if setDomain == false then
+		if EnKai.strings.find(details.tag, 'weekly') ~= nil then
+			if processTitleFlag == true then details.name = string.format("%s (%s)", details.name, details.tagName) end
+			details.domain = 'weekly'
+			setDomain = true
+		elseif EnKai.strings.find(details.tag, 'daily') ~= nil then
+			if processTitleFlag == true then details.name = string.format("%s (%s)", details.name, details.tagName) end
+			details.domain = 'daily'
+			setDomain = true
+		elseif EnKai.strings.find(details.tag, 'story') then
+			details.domain = 'story'
+			setDomain = true
+		elseif details.domain == nil then		
+			if details.tag ~= nil then
+				if EnKai.strings.find(details.tag, 'dungeon') then
+					details.domain = 'instant'
+					setDomain = true
+				elseif EnKai.strings.find(details.tag, 'monthly') then
+					details.domain = 'monthly'
+					setDomain = true
+				else
+					if nkDebug then nkDebug.logEntry (addonInfo.identifier, "internal.processQuest", "no domain 1", details) end
+					details.domain = 'personal'
+				end
+			elseif EnKai.strings.find(details.name, privateVars.langTexts.identifierCarnage) then
+				details.domain = 'carnage'
+				setDomain = true
+			else
+				if nkDebug then nkDebug.logEntry (addonInfo.identifier, "internal.processQuest", "no domain 2", details) end
+				details.domain = 'personal'
+			end
+		end
 	end
 
 	local lvl, libDetails = nkQuestBase.query.byKey(details.id, nkQuestTrackerSetup.showZone)
@@ -458,6 +495,7 @@ function internal.showTooltip (parent, questkey, itemkey, category, message)
 	
 	local tooltip = uiElements.tooltip
 	local quest, flag
+
 	tooltip:ClearAll()
 	tooltip:SetTitleFontSize(15)
 	
@@ -536,8 +574,6 @@ function internal.showTooltip (parent, questkey, itemkey, category, message)
 			table.insert (lines, { text = string.format(privateVars.langTexts.scene, scene), wordwrap = true, fontsize=13})
 			
 		end
-		
-		
 	end
 	
 	if quest ~= nil and quest.objective ~= nil then
@@ -548,6 +584,11 @@ function internal.showTooltip (parent, questkey, itemkey, category, message)
 				table.insert(lines, {text = string.format("<font color='%s'>%s</font>", "#FFFFFF", v.description), wordwrap = true, fontsize = 13 })
 			end
 		end
+	end
+
+	if nkDebug then -- show quest key if nkDebug is enabled		
+		table.insert (lines, { text = "", height = 10})
+		table.insert(lines, {text = string.format("<font color='%s'>%s</font>", "#FF0000", questkey), wordwrap = true, fontsize = 13 })
 	end
 	
 	tooltip:SetLines(lines)
