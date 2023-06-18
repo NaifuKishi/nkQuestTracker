@@ -19,7 +19,7 @@ local lastQuestUpdate	= nil
 local _addonInit		= false
 local _update			= false
 local updateQuestList	= {}
-local _useItemUpdates	= {}
+--local _useItemUpdates	= {}
 local _questCache		= {}
 local _internalMove		= {}
 
@@ -201,35 +201,14 @@ end
 
 ---------- addon internal functions ---------
 
-function events.SlotUpdate(_, updates)
-
-  if nkQuestTrackerSetup.useUI == false then return end
-
---  if privateVars.returnQuestItem ~= nil then return end
-  
-	for slot, key in pairs(updates) do
-		if EnKai.strings.startsWith(slot, "sqst") then
-			if _internalMove[slot] == true then
-				_internalMove[slot] = nil
-			else
-				if key == false then
-					--if privateVars.questItemList[key] == true then
-					--	uiElements.useUI:Update()
-					--end
-				else
-					local details = oInspectItemDetail(key)
-					if details ~= nil then
-						-- local questItem = nkQuestBase.query.questItemByKey (details.type)
-						-- if questItem ~= nil then
-							uiElements.useUI:Update()
-							return
-						-- end
-					end
-				end
-			end
+function events.InventoryUpdate(_, items)
+	for k, v in pairs(items) do
+		local thisItem = EnKai.inventory.GetItemByKey (k)
+		if thisItem ~=  nil and thisItem.category == 'misc quest' then
+			uiElements.useUI:Update()
+			return
 		end
 	end
-
 end
 
 function events.unitNotAvaiable(_, units)
@@ -306,16 +285,16 @@ function events.systemUpdate()
 		data.useUpdate = false
 	end
 
-	if oInspectSystemSecure() == false and #_useItemUpdates > 0 then
-		for k, v in pairs(_useItemUpdates) do
-			if v.type == 'add' then
-				uiElements.useUI:AddUseItem(v.key, v.name, v.icon)
-			else
-				uiElements.useUI:RemoveUseItem(v.key)
-			end
-		end
-		_useItemUpdates = {}
-	end
+	--if oInspectSystemSecure() == false and #_useItemUpdates > 0 then
+	--	for k, v in pairs(_useItemUpdates) do
+	--		if v.type == 'add' then
+	--			uiElements.useUI:AddUseItem(v.key, v.name, v.icon)
+	--		else
+	--			uiElements.useUI:RemoveUseItem(v.key)
+	--		end
+	--	end
+	--	_useItemUpdates = {}
+	--end
 	
 	if _update == true then return end
 

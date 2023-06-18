@@ -131,8 +131,8 @@ local function _fctUnitAvailable (_, units)
 		
 		Command.Event.Attach(Event.Unit.Detail.Level, events.unitLevel, "nkQuestTracker.Unit.Detail.Level")
 		
-		Command.Event.Attach(Event.Item.Slot, events.SlotUpdate, "nkQuestTracker.inventory.Item.Slot")
-		Command.Event.Attach(Event.Item.Update, events.SlotUpdate, "nkQuestTracker.inventory.Item.Update")
+		Command.Event.Attach(EnKai.events["EnKai.InventoryManager"].Update, events.InventoryUpdate, "nkQuestTracker.EnKai.InventoryManager.update")
+
 	end
 
 	--uiElements.questLog:SetTitle(addonInfo.name)

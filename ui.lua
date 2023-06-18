@@ -75,11 +75,12 @@ function internal.buildUI ()
 	-- ********* QUEST ITEM BUTTON
 		
 	local useButton = EnKai.uiCreateFrame("nkActionButtonMetro", name .. "questIconButton", uiElements.secureContext)
-	useButton:SetScale(.25)
-	useButton:SetPoint("CENTERRIGHT", ui:GetHeader(), "CENTERRIGHT", -3, 0)	
+	useButton:SetScale(.75)
+	useButton:SetPoint("TOPRIGHT", ui, "TOPLEFT", -5, 0)	
 	useButton:SetColor(0, 0, 0, 0)
-	useButton:SetBackgroundColor(colorR, colorG, colorB, colorA)
+	useButton:SetBackgroundColor(0, 0, 0, 0)
 	useButton:SetSecureMode("restricted")	
+	--useButton:SetVisible(false)
 
 	local checkAlpha = nil
 
@@ -96,22 +97,22 @@ function internal.buildUI ()
 		end
 	end, name .. ".resizeIcon.Mouse.Cursor.Out")
 
-	useButton:EventAttach(Event.UI.Input.Mouse.Right.Down, function (self)
-		if oInspectSystemSecure() then return end
-
-		if uiElements.useUI:GetVisible() == true then
-			uiElements.useUI:SetVisible(false)
-		else
-			uiElements.useUI:SetVisible(true)
-		end
-	end, name .. ".resizeIcon.Mouse.Right.Down")
-
 	function ui:getUseItemButton () return useButton end
+
+	local questItemsIcon = UI.CreateFrame('Texture', name .. '.zoneFilterIcon', ui:GetHeader())
+	questItemsIcon:SetPoint("CENTERRIGHT", ui:GetHeader(), "CENTERRIGHT", -3, 0)	
+	questItemsIcon:SetTextureAsync("nkQuestTracker", "gfx/items.png");
+	questItemsIcon:SetWidth(12)
+	questItemsIcon:SetHeight(12)
+	
+	questItemsIcon:EventAttach(Event.UI.Input.Mouse.Left.Down, function (self)
+		uiElements.useUI:toggle()		
+	end, name .. ".questItemsIcon.Mouse.Left.Down")
 
 	-- ********* ZONE FILTER BUTTON
 	
 	local zoneFilterIcon = UI.CreateFrame('Texture', name .. '.zoneFilterIcon', ui:GetHeader())
-	zoneFilterIcon:SetPoint("CENTERRIGHT", useButton, "CENTERLEFT", -5, 0)
+	zoneFilterIcon:SetPoint("CENTERRIGHT", questItemsIcon, "CENTERLEFT", -5, 0)
 	zoneFilterIcon:SetTextureAsync("nkQuestTracker", "gfx/zoneFilterOff.png");
 	zoneFilterIcon:SetWidth(12)
 	zoneFilterIcon:SetHeight(12)
@@ -344,17 +345,7 @@ function internal.buildUI ()
 				end
 			end
 		end
-	end
-	
-	-- function ui:CompleteQuest(key) -- vermutlich nicht mehr in Gebrauch
-		-- for k, v in pairs(questCategories) do
-			-- if v:HasQuest(key) then 
-				-- v:CompleteQuest(key)
-				-- v:RecalcHeight()
-				-- ui:RecalcHeight() 
-			-- end
-		-- end
-	-- end
+	end	
 	
 	---------------------------------------
 	------------ design update ------------
@@ -384,4 +375,3 @@ function internal.buildUI ()
 	return ui
 
 end
-
