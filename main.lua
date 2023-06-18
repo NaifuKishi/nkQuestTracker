@@ -436,6 +436,12 @@ function internal.processQuest(details, processTitleFlag)
 			end 
 		end
 	end
+
+	-- categoryName includes the zone name for dungeon quests
+	
+	if details.zone == nil and details.domain == 'instant' then
+		details.zone = details.categoryName
+	end
 	
 	if EnKai.strings.find(details.tag, 'story') ~= nil and details.zone == nil and details.categoryName ~= nil then
 		details.name = string.format("%s:\n%s", details.categoryName, details.name)
