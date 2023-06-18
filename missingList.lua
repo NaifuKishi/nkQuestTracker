@@ -12,6 +12,8 @@ local oInspectQuestComplete	= Inspect.Quest.Complete
 
 ---------- init local variables ---------
 
+local colorR, colorG, colorB, colorA = 0.9, 0.74, 0, 1
+
 ---------- init variables ---------
 
 ---------- local function block ---------
@@ -119,7 +121,9 @@ function internal.missingUI ()
 	ui:SetWidth(400)
 	ui:SetHeight(527)
 	ui:SetPoint("TOPRIGHT", uiElements.questLog, "TOPLEFT")
-	ui:SetTitle("nkQuestTracker")
+	ui:SetTitle(privateVars.langTexts.missingQuests)
+	ui:SetTitleAlign("left", 0)
+	ui:SetTitleFontColor(colorR, colorG, colorB, colorA)
 	ui:SetVisible(false)	
 	
 	local grid = EnKai.uiCreateFrame("nkGrid", name .. 'grid', ui:GetContent())

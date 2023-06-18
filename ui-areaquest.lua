@@ -7,6 +7,8 @@ local uiElements	= privateVars.uiElements
 
 ---------- init local variables ---------
 
+local colorR, colorG, colorB, colorA = 0.9, 0.74, 0, 1
+
 ---------- init variables ---------
 
 ---------- local function block ---------
@@ -27,13 +29,18 @@ function internal.buildAreaQuestUI ()
 	ui:SetLayer(1)
 	ui:SetTitle(privateVars.langTexts.areaQuestUIHeader)
 	ui:SetTitleColor(1, 1 ,1 ,1)
-	ui:SetTitleAlign("right", -30)
+	ui:SetTitleAlign("left", 40)
 	ui:SetCloseable(false)
 	ui:ShowMoveToggle(true)
 	ui:SetDragable(nkQuestTrackerSetup.areaquestui.moveable)
 	ui:SetCollapseable(true)
 	ui:DisplayHeader(nkQuestTrackerSetup.displayHeader)
 	ui:SetFontSize(14)
+
+	ui:GetHeader():SetBackgroundColor(0, 0, 0, nkQuestTrackerSetup.bgAlpha)	
+	ui:SetTitleColor(colorR, colorG, colorB, colorA)
+	ui:SetArrowTextures("nkQuestTracker", "gfx/windowModernArrowRight.png", "gfx/windowModernArrowDown.png")
+	ui:GetMoveCheckbox():SetColor(colorR, colorG, colorB, colorA)	
 	
 	Command.Event.Attach(EnKai.events[name].Moved, function (_, xpos, ypos)
 		nkQuestTrackerSetup.areaquestui.xpos = xpos

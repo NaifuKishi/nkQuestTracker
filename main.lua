@@ -23,6 +23,8 @@ local oInspectMouse			= Inspect.Mouse
 
 ---------- init local variables ---------
 
+local colorR, colorG, colorB, colorA = 0.9, 0.74, 0, 1
+
 local _craftingItems = {
 	"I4CD48A0656A66436,41331FF662BDB8ED,,,,,,",
 	"I21D9052625C52295,709CF1BA97DA8BF9,,,,,,",
@@ -114,8 +116,8 @@ local function _fctUnitAvailable (_, units)
 		uiElements.progressBar:SetLayer(99)
 		uiElements.progressBar:SetVisible(false)
 		uiElements.progressBar:SetFontColor(0, 0, 0, 1)
-		uiElements.progressBar:SetBorderColor(1, 1, 1, 1)
-		uiElements.progressBar:SetFillColor(1, 1, 1, 1)
+		uiElements.progressBar:SetBorderColor(colorR, colorG, colorB, colorA)
+		uiElements.progressBar:SetFillColor(colorR, colorG, colorB, colorA)
 		
 		
 		Command.Event.Attach(Event.Quest.Accept, events.questAccept, "nkQuestTracker.Quest.Accept")

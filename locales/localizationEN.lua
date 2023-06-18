@@ -51,6 +51,7 @@ if EnKai.tools.lang.getLanguage() ~= "German" then
 		categoryHeaderSize		= 'Category title size %d',
 		abandonAll				= 'Abandon all',
 		identifierCarnage		= 'Carnage',
+		missingQuests			= 'Missing quests',
 		
 		showCategoryCheckbox	= {	crafting = "Crafting", 
 									weekly = "Weekly", 

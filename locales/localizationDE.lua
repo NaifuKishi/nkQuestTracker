@@ -51,6 +51,7 @@ if ( EnKai.tools.lang.getLanguage()  == "German") then
 		categoryHeaderSize		= 'Grösse Kategorietitel %d',
 		abandonAll				= 'Alle abbrechen',
 		identifierCarnage		= 'Massaker',
+		missingQuests			= 'Fehlende Quests',
 		
 		showCategoryCheckbox	= {	area = "Gebiet", 
 									guild = "Gilde", 
