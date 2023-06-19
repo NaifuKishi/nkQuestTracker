@@ -68,10 +68,10 @@ function internal.questCategory(category, parent, ui)
 
 	local subFrame
 	local frame = UI.CreateFrame("Frame", name, parent)
-	frame:SetWidth(parent:GetWidth()- 20)
+	frame:SetWidth(parent:GetWidth())
 
 	local header = UI.CreateFrame("Frame", name .. '.header', frame)
-	header:SetPoint("TOPLEFT", frame, "TOPLEFT")
+	header:SetPoint("TOPLEFT", frame, "TOPLEFT")	
 	header:SetWidth(frame:GetWidth())
 
 	header:EventAttach(Event.UI.Input.Mouse.Right.Down, function (self)
@@ -83,14 +83,14 @@ function internal.questCategory(category, parent, ui)
 	end, name .. "Header.Left.Down")
 
 	local headerIndicator = UI.CreateFrame("Text", name .. '.headerIndicator', frame)
-	headerIndicator:SetPoint("CENTERLEFT", header, "CENTERLEFT")
+	headerIndicator:SetPoint("CENTERLEFT", header, "CENTERLEFT", 8, 0)
 	headerIndicator:SetFontSize(nkQuestTrackerSetup.categoryHeaderSize)
-	headerIndicator:SetText(" -")
+	headerIndicator:SetText("-")
 	headerIndicator:SetWidth(15)
 
 	local headerText = UI.CreateFrame("Text", name .. '.headerText', frame)
 	headerText:SetWordwrap(true)
-	headerText:SetPoint("CENTERLEFT", headerIndicator, "CENTERRIGHT")
+	headerText:SetPoint("CENTERLEFT", header, "CENTERLEFT", 20, 0)
 	headerText:SetFontSize(nkQuestTrackerSetup.categoryHeaderSize)
 	headerText:SetText(privateVars.langTexts.showCategoryCheckbox[category])
 	headerText:SetWidth(header:GetWidth() - 15)
@@ -103,9 +103,11 @@ function internal.questCategory(category, parent, ui)
 		if subFrame:GetVisible() == true then
 			subFrame:SetVisible(false)
 			headerIndicator:SetText("+")
+			headerIndicator:SetPoint("CENTERLEFT", header, "CENTERLEFT", 5, 0)
 		else
 			subFrame:SetVisible(true)
-			headerIndicator:SetText(" -")
+			headerIndicator:SetText("-")
+			headerIndicator:SetPoint("CENTERLEFT", header, "CENTERLEFT", 8, 0)
 		end
 		frame:RecalcHeight()
 		parent:RecalcHeight()
@@ -135,7 +137,10 @@ function internal.questCategory(category, parent, ui)
 
 	if nkQuestTrackerSetup.categoryCollapseState[category] == nil then nkQuestTrackerSetup.categoryCollapseState[category] = true end
 	subFrame:SetVisible(nkQuestTrackerSetup.categoryCollapseState[category])
-	if nkQuestTrackerSetup.categoryCollapseState[category] == false then headerIndicator:SetText(" +") end
+	if nkQuestTrackerSetup.categoryCollapseState[category] == false then 
+		headerIndicator:SetText("+") 
+		headerIndicator:SetPoint("CENTERLEFT", header, "CENTERLEFT", 5, 0)
+	end
 
 	local questEntries = {}
 	local questCount = 0
@@ -206,12 +211,6 @@ function internal.questCategory(category, parent, ui)
 	------------ Quest methods ------------
 
 	function frame:AddQuest(key, title, objectives, complete, level, zone)
-
-		--if zone ~= nil and EnKai.strings.find(title, zone) then
-		--	local pattern = string.format("%s:", zone)
-		--	local newTitle = string.match(title, pattern .. "(.*)")
-		--	if newTitle then title = newTitle end
-		--end
 
 		local thisEntry
 

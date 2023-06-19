@@ -117,7 +117,7 @@ function internal.buildUseUI ()
 	ui:SetPoint("TOPLEFT", uiElements.questLog, "TOPRIGHT", 5, 0)
 	ui:SetWidth(50)
 	ui:SetHeight(300)
-	ui:SetBackgroundColor(0, 0, 0, .5)
+	--ui:SetBackgroundColor(1, 0, 0, 1)
 	ui:SetSecureMode('restricted')
 	ui:SetVisible(true)
 
@@ -125,14 +125,17 @@ function internal.buildUseUI ()
 	local useState = {}
 
 	local from, to, object, x, y = "TOPLEFT", "TOPLEFT", ui, 0, 0
+	local lastUseItem = nil
 
 	for idx1 = 1, 4, 1 do
-		if idx1 ~= 1 then to, object, x = "TOPRIGHT", useItems[1], 5 end
+		if idx1 ~= 1 then from, to, object, x, y = "TOPLEFT", "TOPRIGHT", lastUseItem, 5, 0 end
 		
-		for idx = 1, 10, 1 do
+		for idx = 1, 10, 1 do			
 			local thisItem = _fctUseItem(name .. '.useItem.' .. idx, ui)
 			thisItem:SetPoint(from, object, to, x, y)
 			to, object, x, y = "BOTTOMLEFT", thisItem, 0, 5
+
+			if idx == 1 then lastUseItem = thisItem end
 			
 			table.insert(useItems, thisItem)
 			table.insert(useState, false)
@@ -149,7 +152,8 @@ function internal.buildUseUI ()
 
 	local function _resize() 
 		local cols = math.floor(_itemCounter / 10) + 1
-		local rows = _itemCounter % 10
+		local rows = 10
+		if _itemCounter < 10 then rows = _itemCounter end
 
 		ui:SetHeight(25 * rows + 5 * (rows - 1))
 		ui:SetWidth(25 * cols + 5 * (cols - 1))
