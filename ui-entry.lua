@@ -84,8 +84,8 @@ function internal.questEntry (key, parent, counter)
 	local use = nil
 	
 	local frame = UI.CreateFrame("Frame", name, parent)
-	frame:SetWidth(parent:GetWidth())
-
+	frame:SetWidth(parent:GetWidth() -  20)
+	
 	local header = UI.CreateFrame("Text", name .. '.Header', frame)
 	header:SetPoint("TOPLEFT", frame, "TOPLEFT")
 	header:SetFontSize(15)
@@ -205,7 +205,7 @@ function internal.questEntry (key, parent, counter)
 			thisObjective = UI.CreateFrame("Text", name .. '.Objective.' .. objectiveCount + 1, subFrame)
 			
 			if objectiveCount == 0 then
-				thisObjective:SetPoint("TOPLEFT", subFrame, "TOPLEFT", 15, 0)
+				thisObjective:SetPoint("TOPLEFT", subFrame, "TOPLEFT", 0, 0)
 			else				
 				thisObjective:SetPoint("TOPLEFT", objectives[objectiveCount], "BOTTOMLEFT")
 			end

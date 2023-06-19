@@ -246,7 +246,7 @@ function internal.questCategory(category, parent)
 
 		for idx = 1, #questEntries, 1 do
 			if idx == 1 then
-				questEntries[idx]:SetPoint("TOPLEFT", subFrame, "TOPLEFT", 15, 0)
+				questEntries[idx]:SetPoint("TOPLEFT", subFrame, "TOPLEFT", 20, 0)
 			else
 				questEntries[idx]:SetPoint("TOPLEFT", questEntries[idx-1], "BOTTOMLEFT", 0, 5)
 			end 
@@ -283,7 +283,7 @@ function internal.questCategory(category, parent)
 
 				for idx = 1, #questEntries, 1 do
 					if idx == 1 then
-						questEntries[idx]:SetPoint("TOPLEFT", subFrame, "TOPLEFT", 15, 0)
+						questEntries[idx]:SetPoint("TOPLEFT", subFrame, "TOPLEFT", 20, 0)
 					else
 						questEntries[idx]:SetPoint("TOPLEFT", questEntries[idx-1], "BOTTOMLEFT", 0, 5)
 					end 
@@ -328,17 +328,6 @@ function internal.questCategory(category, parent)
 			end
 		end 
 	end
-
-	-- function frame:CompleteQuest(key)
-	-- for idx = 1, #questEntries, 1 do
-	-- if questEntries[idx]:GetKey() == key then
-	-- local thisEntry = questEntries[idx]       
-	-- thisEntry:ClearAllObjectives()
-	-- thisEntry:RecalcHeight()
-	-- return
-	-- end
-	-- end 
-	-- end
 
 	---------------------------------------
 	------------ design update ------------
