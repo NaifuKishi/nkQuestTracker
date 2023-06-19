@@ -48,7 +48,8 @@ function internal.Config ()
 	closeButton:SetIcon("EnKai", "gfx/icons/close.png")
 	closeButton:SetScale(.8)
 	closeButton:SetLayer(9)
-
+	closeButton:SetBorderColor(0, 0, 0, 1)
+	
 	Command.Event.Attach(EnKai.events[name .. ".closeButton"].Clicked, function (_, newValue)
 		config:SetVisible(false) 
 	end, name .. ".closeButton.Clicked")
@@ -60,6 +61,7 @@ function internal.Config ()
 	pasteButton:SetWidth(200)
 	pasteButton:SetScale(.8)  
 	pasteButton:SetLayer(9)
+	pasteButton:SetBorderColor(0, 0, 0, 1)
 
 	Command.Event.Attach(EnKai.events[name .. ".pasteButton"].Clicked, function (_, newValue)
 		nkQuestTrackerSetup = nkQuestTrackerGlobal
@@ -73,6 +75,7 @@ function internal.Config ()
 	copyButton:SetLayer(9)
 	copyButton:SetWidth(200)
 	copyButton:SetScale(.8)
+	copyButton:SetBorderColor(0, 0, 0, 1)
 
 	Command.Event.Attach(EnKai.events[name .. ".copyButton"].Clicked, function (_, newValue)
 		nkQuestTrackerGlobal = nkQuestTrackerSetup

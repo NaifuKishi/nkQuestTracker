@@ -69,7 +69,6 @@ function internal.questCategory(category, parent)
 	local subFrame
 	local frame = UI.CreateFrame("Frame", name, parent)
 	frame:SetWidth(parent:GetWidth())
-	--frame:SetBackgroundColor(1, 0, 0, 1)
 
 	local header = UI.CreateFrame("Frame", name .. '.header', frame)
 	header:SetPoint("TOPLEFT", frame, "TOPLEFT")	

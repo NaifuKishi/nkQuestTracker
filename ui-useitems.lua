@@ -117,7 +117,6 @@ function internal.buildUseUI ()
 	ui:SetPoint("TOPLEFT", uiElements.questLog, "TOPRIGHT", 5, 0)
 	ui:SetWidth(50)
 	ui:SetHeight(300)
-	--ui:SetBackgroundColor(1, 0, 0, 1)
 	ui:SetSecureMode('restricted')
 	ui:SetVisible(true)
 
