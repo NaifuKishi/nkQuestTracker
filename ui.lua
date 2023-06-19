@@ -215,7 +215,7 @@ function internal.buildUI ()
 	-- ********* SCROLL PANE
 			
 	scrollPane = EnKai.uiCreateFrame("nkScrollPane", name .. 'scrollPane', ui:GetContent())
-	scrollPane:SetPoint("TOPLEFT", ui:GetContent(), "TOPLEFT", -2, 0)
+	scrollPane:SetPoint("TOPLEFT", ui:GetContent(), "TOPLEFT", 0, 0)
 	scrollPane:SetWidth(ui:GetContent():GetWidth())
 	scrollPane:SetHeight(ui:GetContent():GetHeight())
 	

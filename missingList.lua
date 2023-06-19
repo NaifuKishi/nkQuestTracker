@@ -119,7 +119,7 @@ function internal.missingUI ()
 	
 	local ui = EnKai.uiCreateFrame("nkWindowMetro", name, uiElements.configContext)
 	ui:SetWidth(400)
-	ui:SetHeight(527)
+	--ui:SetHeight(527)
 	ui:SetPoint("TOPRIGHT", uiElements.questLog, "TOPLEFT")
 	ui:SetTitle(privateVars.langTexts.missingQuests)
 	ui:SetTitleAlign("left", 0)
@@ -129,7 +129,7 @@ function internal.missingUI ()
 	local grid = EnKai.uiCreateFrame("nkGrid", name .. 'grid', ui:GetContent())
 		
 	grid:SetHeaderHeight(0)
-	grid:SetPoint("TOPLEFT", ui:GetContent(), "TOPLEFT", 0, 10)
+	grid:SetPoint("TOPLEFT", ui:GetContent(), "TOPLEFT", 0, 0)
 	grid:SetBorderColor(0, 0, 0, nkQuestTrackerSetup.bgAlpha)
 	
 	if nkQuestTrackerSetup.bgAlpha-0.2 < 0 then
@@ -177,6 +177,8 @@ function internal.missingUI ()
 		grid:SetRowPos(math.floor(slider:GetValue('value')), true)
 	end, name .. 'slider.ScrollboxChanged')
 	
+	ui:SetHeight(grid:GetHeight()+30)
+
 	function ui:GetGrid() return grid end
 	function ui:GetSlider() return slider end
 

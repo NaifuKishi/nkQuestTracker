@@ -60,7 +60,7 @@ end
 
 ---------- addon internal function block ---------
 
-function internal.questCategory(category, parent, ui)
+function internal.questCategory(category, parent)
 
 	local name = parent:GetName() .. ".questCategory." .. category
 	local sortedQuestList = {}
@@ -69,6 +69,7 @@ function internal.questCategory(category, parent, ui)
 	local subFrame
 	local frame = UI.CreateFrame("Frame", name, parent)
 	frame:SetWidth(parent:GetWidth())
+	--frame:SetBackgroundColor(1, 0, 0, 1)
 
 	local header = UI.CreateFrame("Frame", name .. '.header', frame)
 	header:SetPoint("TOPLEFT", frame, "TOPLEFT")	
