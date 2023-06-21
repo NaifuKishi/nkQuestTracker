@@ -6,7 +6,7 @@ Description = "nkQuestTracker is a replacement of the standard quest tracker."
 Author = "Naifu"
 Email = "naifukishi@gmail.com"
 
-Version = "3.0.2"
+Version = "3.0.3"
 Environment = "4.0"
 
 RunOnStartup = {
