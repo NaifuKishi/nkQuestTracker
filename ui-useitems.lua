@@ -150,6 +150,7 @@ function internal.buildUseUI ()
 	end
 
 	local function _resize() 
+		print (_itemCounter)
 		local cols = math.floor(_itemCounter / 10) + 1
 		local rows = 10
 		if _itemCounter < 10 then rows = _itemCounter end
@@ -211,10 +212,6 @@ function internal.buildUseUI ()
 					_itemCounter = _itemCounter - 1
 					_resize()
 					return
-				else
-					hasItems = true
-					_itemCounter = 0
-					_resize()
 				end
 			end
 		end
