@@ -202,11 +202,13 @@ end
 ---------- addon internal functions ---------
 
 function events.InventoryUpdate(_, items)
+
 	for k, v in pairs(items) do
-		local thisItem = EnKai.inventory.GetItemByKey (k)
-		if thisItem ~=  nil and thisItem.category == 'misc quest' then
-			uiElements.useUI:Update()
-			return
+		if k ~= useItemKey then
+			if thisItem ~=  nil and thisItem.category == 'misc quest' then
+				uiElements.useUI:Update()
+				return
+			end
 		end
 	end
 end

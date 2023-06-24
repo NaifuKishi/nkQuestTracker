@@ -36,6 +36,7 @@ local function _fctSetUseButton (useItem)
 				if EnKai.strings.startsWith(slot, "sqst.") == true then
 					if details == false then
 						pcall (Command.Item.Move, itemSlot, slot)
+						--print ("return quest item to quest inventory")
 						break
 					end 
 				end
@@ -58,6 +59,7 @@ local function _fctSetUseButton (useItem)
 		local questSlot = EnKai.inventory.getQuestItemSlot (useItem:GetItemType())
 
 		pcall (Command.Item.Move, questSlot, availSlots[1])
+		--print ("move quest item to inventory")
 	end
 
 	-- ***** move set quest item button *****
@@ -109,6 +111,10 @@ local function _fctUseItem(name, parent)
 end
 ---------- addon internal function block ---------
 
+function internal.getUseButtonQuestItemID()
+	return _useButtonQuestItemID
+end
+
 function internal.buildUseUI ()
 
 	local name = "nkQuestTracker.UseUI"
@@ -150,10 +156,12 @@ function internal.buildUseUI ()
 	end
 
 	local function _resize() 
-		print (_itemCounter)
+		
 		local cols = math.floor(_itemCounter / 10) + 1
 		local rows = 10
 		if _itemCounter < 10 then rows = _itemCounter end
+
+		--print (cols, rows	)
 
 		ui:SetHeight(25 * rows + 5 * (rows - 1))
 		ui:SetWidth(25 * cols + 5 * (cols - 1))
@@ -197,7 +205,19 @@ function internal.buildUseUI ()
 			end
 		end
 	end
-	
+			
+	function ui:RemoveAllUseItems()
+		for idx = 1, #useState, 1 do
+			if useState[idx] ~= false then
+				useState[idx] = false
+				useItems[idx]:SetVisible(false)
+				useItems[idx]:EventDetach(Event.UI.Input.Mouse.Left.Down, nil, useItems[idx]:GetName() .. ".Mouse.Left.Down")
+			end
+		end
+
+		_itemCounter = 0
+	end
+
 	function ui:RemoveUseItem(key)
 
 		local hasItems = false
@@ -227,32 +247,45 @@ function internal.buildUseUI ()
 		
 		Command.System.Watchdog.Quiet()
 	
+		ui:RemoveAllUseItems()
+
 		-- go through quest item space, identify usable quest items and move them to the bag 
 	
+		local completeList
 		local itemList = EnKai.inventory.getQuestItems()		
+
+		if itemList == nil then 
+			completeList = {}
+		else
+			completeList = EnKai.tools.table.copy (itemList)
+		end
+
 		local bagItemList = EnKai.inventory.queryByCategory ('misc quest')
 
-		local completeList = EnKai.tools.table.copy (itemList)
-		
-		if bagItemList and itemList then
+		if bagItemList ~= nil then
 			for key, v in pairs (bagItemList) do
+
+				--print (v.name)
+
 				local found = false
 
-				for slot, details in pairs(itemList) do
+				for slot, details in pairs(completeList) do
 					if details.id == key then
 						found = true
 					end
 				end
 				
-				if found == false then
-					completeList.key = v
-				end
+				if found == false then completeList[key] = v end
 			end
+		
 		end
+
+		--print ('-----------------')
 
 		local tempList = {}
 		
 		for k, v in pairs (completeList) do
+			--print (v.name)
 			local questInfo = nkQuestBase.query.questItemByKey (v.type)
 			if questInfo ~= nil then v.qKey = questInfo.qKey  end
 			table.insert(tempList, v)
@@ -268,6 +301,7 @@ function internal.buildUseUI ()
 				
 		for idx = 1, #tempList, 1 do
 			local thisItem = tempList[idx]
+			--print (thisItem.name)
 			local useItem = ui:GetUseItemByKey(thisItem.id)
 
 			if useItem == nil then
@@ -278,6 +312,7 @@ function internal.buildUseUI ()
 		--- ***** remove invalid quest items *****
 
 		local useState = ui:GetUseState()
+
 		for idx = 1, #useState, 1 do
 			local key  = useState[idx]
 			if key ~= false then
