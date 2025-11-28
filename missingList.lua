@@ -125,7 +125,7 @@ function internal.missingUI ()
 	ui:SetTitleFont(addonInfo.id, "Montserrat")
 	ui:SetTitleAlign("left", 0)
 	ui:SetTitleFontColor(colorR, colorG, colorB, colorA)
-	ui:SetVisible(false)	
+	ui:SetVisible(false)		
 	
 	local grid = EnKai.uiCreateFrame("nkGrid", name .. 'grid', ui:GetContent())
 		

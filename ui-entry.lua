@@ -4,6 +4,7 @@ local addonInfo, privateVars = ...
 
 local internal		= privateVars.internal
 local uiElements	= privateVars.uiElements
+local data			= privateVars.data
 
 local oInspectQuestDetail	= Inspect.Quest.Detail
 local oInspectMouse			= Inspect.Mouse
@@ -56,6 +57,7 @@ local function _fctShowMenu (parent, key)
 
 	if uiElements.menu == nil then
 		uiElements.menu = EnKai.uiCreateFrame("nkMenu", 'nkQuestTracker.menu', uiElements.context)
+		uiElements.menu:SetFont(addonInfo.id, "Montserrat")
 		uiElements.menu:SetLayer(3)
 		uiElements.menu:AddEntry({ label = privateVars.langTexts.track, callBack = _fctTrackQuest })
 		uiElements.menu:AddEntry({ label = privateVars.langTexts.abandon, callBack = _fctAbandonQuest })
@@ -87,11 +89,13 @@ function internal.questEntry (key, parent, counter)
 	frame:SetWidth(parent:GetWidth() -  20)
 	
 	local header = UI.CreateFrame("Text", name .. '.Header', frame)
-	header:SetPoint("TOPLEFT", frame, "TOPLEFT")
+	header:SetPoint("TOPLEFT", frame, "TOPLEFT")	
 	header:SetFontSize(15)
 	header:SetFontColor(1, 1, 1, 1)
 	header:SetWordwrap(true)
 	header:SetWidth(frame:GetWidth())
+
+	EnKai.ui.setFont(header, addonInfo.id, "Montserrat")
 
 	if parent.GetCategory ~= nil then
 		header:EventAttach(Event.UI.Input.Mouse.Left.Down, function (self)
@@ -209,6 +213,8 @@ function internal.questEntry (key, parent, counter)
 			else				
 				thisObjective:SetPoint("TOPLEFT", objectives[objectiveCount], "BOTTOMLEFT")
 			end
+			
+			EnKai.ui.setFont(thisObjective, addonInfo.id, "Montserrat")
 			
 			thisObjective:SetFontSize(fontSize)			
 			table.insert(objectives, thisObjective)

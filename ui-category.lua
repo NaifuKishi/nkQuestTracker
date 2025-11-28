@@ -4,6 +4,7 @@ local addonInfo, privateVars = ...
 
 local internal		= privateVars.internal
 local uiElements	= privateVars.uiElements
+local data			= privateVars.data
 
 local oInspectMouse			= Inspect.Mouse
 local oInspectSystemSecure	= Inspect.System.Secure
@@ -46,6 +47,7 @@ local function _fctShowMenuCategory (parent, category)
 
 	if uiElements.menuCategory == nil then
 		uiElements.menuCategory = EnKai.uiCreateFrame("nkMenu", 'nkQuestTracker.menuCategory', uiElements.context)
+		uiElements.menuCategory:SetFont(addonInfo.id, "Montserrat")
 		uiElements.menuCategory:SetLayer(3)
 		uiElements.menuCategory:AddEntry({ label = privateVars.langTexts.abandonAll, callBack = _fctAbandonQuestCategory })
 	end
@@ -84,16 +86,20 @@ function internal.questCategory(category, parent)
 
 	local headerIndicator = UI.CreateFrame("Text", name .. '.headerIndicator', frame)
 	headerIndicator:SetPoint("CENTERLEFT", header, "CENTERLEFT", 8, 0)
-	headerIndicator:SetFontSize(nkQuestTrackerSetup.categoryHeaderSize)
+	headerIndicator:SetFontSize(nkQuestTrackerSetup.categoryHeaderSize)	
 	headerIndicator:SetText("-")
 	headerIndicator:SetWidth(15)
 
-	local headerText = UI.CreateFrame("Text", name .. '.headerText', frame)
+	EnKai.ui.setFont(headerIndicator, addonInfo.id, "Montserrat")
+
+	local headerText = UI.CreateFrame("Text", name .. '.headerText', frame)	
 	headerText:SetWordwrap(true)
 	headerText:SetPoint("CENTERLEFT", header, "CENTERLEFT", 20, 0)
 	headerText:SetFontSize(nkQuestTrackerSetup.categoryHeaderSize)
 	headerText:SetText(privateVars.langTexts.showCategoryCheckbox[category])
 	headerText:SetWidth(header:GetWidth() - 15)
+
+	EnKai.ui.setFont(headerText, addonInfo.id, "Montserrat")
 
 	local color = nkQuestTrackerSetup.categoryColor[category]
 	headerIndicator:SetFontColor(color[1], color[2], color[3], nkQuestTrackerSetup.bgAlpha)

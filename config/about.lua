@@ -26,11 +26,11 @@ function nkQuestTracker.ConfigTabAbout (parent)
 		donate3		= UI.CreateFrame("Text", name .. ".donate3", about)
 				
 		addonName:SetPoint("TOPCENTER", about, "TOPCENTER", 0, 60)
-		addonName:SetText(string.format(privateVars.langTexts.about.addonName, addonInfo.identifier))
+		addonName:SetText(string.format(privateVars.langTexts.about.addonName, addonInfo.identifier))		
 		addonName:SetFontSize(30)
 		addonName:SetFontColor(0.906, 0.784, 0.471, 1)
 		addonName:SetEffectGlow({ offsetX = 2, offsetY = 2})
-		
+
 		EnKai.ui.setFont(addonName, addonInfo.id, "Montserrat")
 		
 		version:SetPoint("TOPCENTER", addonName, "BOTTOMCENTER")
@@ -52,14 +52,14 @@ function nkQuestTracker.ConfigTabAbout (parent)
 		copyright:SetText(privateVars.langTexts.about.copyright)
 		copyright:SetFontSize(16)
 		copyright:SetFontColor(1, 1, 1, 1)
-		
+
 		EnKai.ui.setFont(copyright, addonInfo.id, "Montserrat")
 		
 		help:SetPoint("TOPCENTER", copyright, "BOTTOMCENTER", 0, 20)
 		help:SetText(privateVars.langTexts.about.help)
 		help:SetFontSize(16)
 		help:SetFontColor(1, 1, 1, 1)
-				
+
 		EnKai.ui.setFont(help, addonInfo.id, "Montserrat")
 				
 		donate1:SetPoint("TOPCENTER", help, "BOTTOMCENTER", 0, 20)
@@ -67,7 +67,7 @@ function nkQuestTracker.ConfigTabAbout (parent)
 		donate1:SetFontSize(20)
 		donate1:SetFontColor(0.906, 0.784, 0.471, 1)
 		donate1:SetEffectGlow({ offsetX = 2, offsetY = 2})
-		
+
 		EnKai.ui.setFont(donate1, addonInfo.id, "Montserrat")
 		
 		donate2:SetPoint("TOPCENTER", donate1, "BOTTOMCENTER")
@@ -75,7 +75,7 @@ function nkQuestTracker.ConfigTabAbout (parent)
 		donate2:SetFontSize(20)
 		donate2:SetFontColor(0.906, 0.784, 0.471, 1)
 		donate2:SetEffectGlow({ offsetX = 2, offsetY = 2})
-		
+
 		EnKai.ui.setFont(donate2, addonInfo.id, "Montserrat")
 		
 		donate3:SetPoint("TOPCENTER", donate2, "BOTTOMCENTER")
@@ -83,7 +83,7 @@ function nkQuestTracker.ConfigTabAbout (parent)
 		donate3:SetFontSize(20)
 		donate3:SetFontColor(0.906, 0.784, 0.471, 1)
 		donate3:SetEffectGlow({ offsetX = 2, offsetY = 2})
-		
+
 		EnKai.ui.setFont(donate3 addonInfo.id, "Montserrat")
 		
 	end

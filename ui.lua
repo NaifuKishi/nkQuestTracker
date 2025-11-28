@@ -21,8 +21,8 @@ local colorR, colorG, colorB, colorA = 0.9, 0.74, 0, 1
 function internal.buildUI ()
 
 	local name = "nkQuestTrackerUI"
-	local scrollPane, content
-	
+	local scrollPane, content	
+
 	local ui = EnKai.uiCreateFrame("nkWindowElement", name, uiElements.context)
 	
 	ui:SetReverseAtBorder(false)

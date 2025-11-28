@@ -4,6 +4,7 @@ local addonInfo, privateVars = ...
 
 local internal		= privateVars.internal
 local uiElements	= privateVars.uiElements
+local data			= privateVars.data
 
 ---------- init local variables ---------
 
@@ -27,6 +28,7 @@ function internal.buildAreaQuestUI ()
 	ui:SetWidth(nkQuestTrackerSetup.areaquestui.width)
 	ui:SetBackgroundColor(0, 0, 0, nkQuestTrackerSetup.bgAlpha)	
 	ui:SetLayer(1)
+	ui:SetTitleFont(addonInfo.id, "Montserrat")
 	ui:SetTitle(privateVars.langTexts.areaQuestUIHeader)
 	ui:SetTitleColor(1, 1 ,1 ,1)
 	ui:SetTitleAlign("left", 40)

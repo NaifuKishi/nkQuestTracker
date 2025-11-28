@@ -5,7 +5,7 @@ if EnKai.tools.lang.getLanguage() ~= "German" then
 	privateVars.langTexts = {
 		areaQuestUIHeader		= 'Area quest',
 		autoHideCheckbox		= 'Auto hide tracker',
-		questGiver				= 'quest giver: <font color="#0094FF">%s</font>',
+		questGiver				= 'Quest giver: <font color="#0094FF">%s</font>',
 		scene					= 'Quest location: <font color="#0094FF">%s</font>',
 		colorByLevelCheckbox	= 'Color by difficulty',
 		tooManyMissing1			= '%d quests not yet completed in the current zone',
@@ -22,7 +22,7 @@ if EnKai.tools.lang.getLanguage() ~= "German" then
 		useUseFrameCheckbox		= "Quest item UI",
 		track					= "Track quest",
 		btCopy					= "Set global",
-		btPaste					= "use global",
+		btPaste					= "Use global",
 		copyMessage				= "The global settings have been set.",
 		pasteMessage			= "The global settings were loaded. Please perform a /reloadui to update the log.",
 		buttonMenuConfig		= "Configuration",
