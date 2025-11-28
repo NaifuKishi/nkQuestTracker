@@ -160,17 +160,21 @@ local function _fctMain(_, addon)
 	
 		table.insert(Command.Slash.Register("nkQuestTracker"), {_fctCommandHandler, "nkQuestTracker", "config"})
 	
-		local items = {
+		--[[local items = {
 		{ label = privateVars.langTexts.buttonMenuConfig, callBack = function () internal.ShowConfig() end},
 		{  label = privateVars.langTexts.buttonMenuToggle, callBack = function () _fctToggle() end},
 		}
+		]]
 
 		if nkPanel ~= nil and nkQuestTrackerSetup.nkPanel == true then
 			uiElements.panel = internal.nkPanelPlugin(items)
 			nkPanel.api.registerPlugin('nkQuestTracker', uiElements.panel)
 		end
 		
-		EnKai.manager.init('nkQuestTracker', items, nil)
+		--EnKai.manager.init('nkQuestTracker', items, nil)
+
+		EnKai.managerV2.RegisterButton("nkQuestTracker.config", addonInfo.id, "gfx/minimapIcon.png", internal.ShowConfig)
+		EnKai.managerV2.RegisterButton("nkQuestTracker.toggle", addonInfo.id, "gfx/minimapIconClose.png", _fctToggle)
 		
 		nkQuestBase.loadPackage("classic")
 		nkQuestBase.loadPackage("nt")
