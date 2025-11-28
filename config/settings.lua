@@ -27,7 +27,7 @@ function internal.ConfigTabSettings (parent)
 		labelGeneric:SetEffectGlow({ offsetX = 2, offsetY = 2})
 		labelGeneric:SetText(privateVars.langTexts.labelGenericSettings)
 		labelGeneric:SetFontSize(16)
-
+		labelGeneric:SetTextFont(addonInfo.id, "MontserratSemiBold")
 		
 		showHeaderCheckbox = EnKai.uiCreateFrame("nkCheckbox", name .. 'showHeaderCheckbox', tabPane)	
 		showHeaderCheckbox:SetPoint("TOPLEFT", labelGeneric, "BOTTOMLEFT", 0, 10)

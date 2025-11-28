@@ -31,7 +31,9 @@ function internal.buildUI ()
 	ui:SetHeight(nkQuestTrackerSetup.height)
 	ui:SetBackgroundColor(0, 0, 0, nkQuestTrackerSetup.bgAlpha)
 	ui:SetLayer(1)
+	ui:SetTitleFont(addonInfo.id, "MontserratSemiBold")	
 	ui:SetTitle(addonInfo.name)
+
 	--ui:SetTitleColor(1, 1 ,1 ,1)
 	ui:SetTitleColor(colorR, colorG, colorB, colorA)
 
@@ -41,7 +43,7 @@ function internal.buildUI ()
 	ui:SetDragable(nkQuestTrackerSetup.moveable)
 	ui:SetCollapseable(true)
 	ui:SetAutoHideHeader(nkQuestTrackerSetup.autoHide, 2, 30)
-	ui:SetFontSize(14)
+	ui:SetFontSize(16)
 
 	ui:GetHeader():SetBackgroundColor(0, 0, 0, nkQuestTrackerSetup.bgAlpha)	
 	
@@ -132,6 +134,7 @@ function internal.buildUI ()
 	end, name .. ".zoneFilterIcon.Mouse.Left.Down")
 	 	
 	EnKai.ui.attachGenericTooltip (zoneFilterIcon, "nkQuestTracker", privateVars.langTexts.zoneFilter)
+	EnKai.ui.genericTooltipSetFont(addonInfo.id, "Montserrat")
 
 	local missingIcon = UI.CreateFrame('Texture', name .. '.missingIcon', ui:GetHeader())
 	missingIcon:SetPoint("CENTERRIGHT", zoneFilterIcon, "CENTERLEFT", -5, 0)

@@ -181,6 +181,9 @@ local function _fctMain(_, addon)
 		nkQuestBase.loadPackage("sfp")
 		
 		EnKai.version.init(addonInfo.toc.Identifier, addonInfo.toc.Version)
+
+		EnKai.ui.registerFont (addonInfo.id, "Montserrat", "fonts/Montserrat-Regular.ttf")
+		EnKai.ui.registerFont (addonInfo.id, "MontserratSemiBold", "fonts/Montserrat-SemiBold.ttf")
 		
 		Command.Event.Attach(Event.Unit.Availability.Full, _fctUnitAvailable, "nkQuestTracker.Unit.Availability.Full")
 	end
